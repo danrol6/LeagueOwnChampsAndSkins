@@ -1,7 +1,8 @@
-import Version
 import Champions
 import Skins
 import json
+
+#Class will write the champions and the skins to its respective file
 
 champions = Champions.champions
 skins = Skins.skins

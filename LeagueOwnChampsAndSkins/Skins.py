@@ -3,32 +3,22 @@ import requests
 import Version
 import Champions
 
-version = Version.version
+
+#This class gets the skin information for each champion based on the champion list created on the Champions.py class
+version = Version.patchVersion
+credentials = Version.credentials
 champions = Champions.champions
 
+#For each champion, it will fetch its skin information using the champion's ID. Then makes the request and extracts the
+#champion's name and their list of skins and adds them to the skins data.
 skins = {}
-
-# print(champions)
 for champion in champions:
-    url = requests.get(f"http://EnterYourAPICredentials.leagueoflegends.com/cdn/{version}/data/en_US/champion/{champion}.json")
-    text = url.text
-    data = json.loads(text)
+    skinURL = requests.get(f"{credentials}/cdn/{version}/data/en_US/champion/{champion}.json")
+    skinText = skinURL.text
+    skinData = json.loads(skinText)
 
-    championName = data['data'][champion]['name']
-    championSkins = data['data'][champion]['skins']
+    championName = skinData['data'][champion]['id']
+    championSkins = skinData['data'][champion]['skins']
     skins[championName] = championSkins
 
-print("Skins retreived successfully.")
-
-#Creating a dictionary for skins
-
-# print((champions['Aatrox']))
-print(skins)
-print(champions)
-
-print("Appending... ")
-champions['Ahri'].append(skins) #appending the new skin data to the current one
-#
-print("After Appending... ")
-print (champions)
-print(data)
+print(f"Skins retrieved successfully.")
